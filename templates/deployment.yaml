@@ -1,0 +1,114 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: run-{{ template "sitefe.truncname" . }}
+  name: sense-{{ template "sitefe.truncname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: run-{{ template "sitefe.truncname" . }}
+  template:
+    metadata:
+      labels:
+        run: run-{{ template "sitefe.truncname" . }}
+    spec:
+      {{- if .Values.tolerations }}
+      tolerations:
+      {{ toYaml .Values.tolerations | indent 6 }}
+      {{- end }}
+      containers:
+      - image: {{ .Values.image.image }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        name: pod-{{ template "sitefe.truncname" . }}
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        - containerPort: 443
+          protocol: TCP
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+            - siterm-liveness
+          initialDelaySeconds: 60
+          periodSeconds: 60
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - siterm-readiness
+          initialDelaySeconds: 60
+          periodSeconds: 60
+          failureThreshold: 3
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        volumeMounts:
+        {{- if .Values.storage.enabled }}
+        - mountPath: /opt/siterm/
+          name: pvc-{{ template "sitefe.truncname" . }}
+        {{- end }}
+        - mountPath: /etc/siterm.yaml
+          name: conf-{{ template "sitefe.truncname" . }}
+          subPath: sense-siterm-fe.yaml
+        - mountPath: /etc/siterm-mariadb
+          name: secret-{{ template "sitefe.truncname" . }}
+          readOnly: true
+          subPath: environment.conf
+        - mountPath: /etc/ansible-conf.yaml
+          name: secret-{{ template "sitefe.truncname" . }}
+          readOnly: true
+          subPath: ansible-conf.yaml
+        - mountPath: /etc/grid-security/hostcert.pem
+          name: cert-{{ template "sitefe.truncname" . }}
+          readOnly: true
+          subPath: cert.pem
+        - mountPath: /etc/grid-security/hostkey.pem
+          name: cert-{{ template "sitefe.truncname" . }}
+          readOnly: true
+          subPath: privkey.pem
+        - mountPath: /etc/httpd/certs/cert.pem
+          name: cert-{{ template "sitefe.truncname" . }}
+          readOnly: true
+          subPath: cert.pem
+        - mountPath: /etc/httpd/certs/privkey.pem
+          name: cert-{{ template "sitefe.truncname" . }}
+          readOnly: true
+          subPath: privkey.pem
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: sense-siterm-fe
+            path: sense-siterm-fe.yaml
+          name: conf-{{ template "sitefe.truncname" . }}
+        name: conf-{{ template "sitefe.truncname" . }}
+      - name: secret-{{ template "sitefe.truncname" . }}
+        secret:
+          defaultMode: 420
+          items:
+          - key: fe-environment
+            path: environment.conf
+          - key: ansible-conf
+            path: ansible-conf.yaml
+          secretName: secret-{{ template "sitefe.truncname" . }}
+      - name: cert-{{ template "sitefe.truncname" . }}
+        secret:
+          defaultMode: 420
+          items:
+          - key: tls.crt
+            path: cert.pem
+          - key: tls.key
+            path: privkey.pem
+          secretName: cert-{{ template "sitefe.truncname" . }}
+      {{- if .Values.storage.enabled }}
+      - name: pvc-{{ template "sitefe.truncname" . }}
+        persistentVolumeClaim:
+          claimName: pvc-{{ template "sitefe.truncname" . }}
+      {{- end }}

@@ -1,0 +1,91 @@
+# Default values for siterm-frontend.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Namespace to deploy into.
+namespace: sense
+
+# Image to run.
+# latest - Production release
+# dev - Development release
+image:
+  image: sdnsense/site-rm-sense:latest
+  pullPolicy: Always
+
+# Resources for Frontend. This should not require any changes.
+# Defaults below:
+resources:
+  limits:
+    cpu: 2
+    memory: 4Gi
+  requests:
+    cpu: 2
+    memory: 4Gi
+
+# Persistent volume claim for Frontend.
+# This should not require any changes if you run ceph and no others are supported yet.
+# If you have another storage class, change it (no guarantees to work and might need manual configuration)
+# If you set it to false - there is no guarantees for persistent storage (and data might be lost at pod restart)
+storage:
+  enabled: true
+  storageClassName: rook-ceph-block
+  capacity: 10Gi
+
+# tolerations for your deployment. Include as many as you need and it will
+# be added to your deployment file.
+# tolerations:
+#   - key: "key"
+#     operator: "Equal|Exists"
+#     value: "value"
+#     effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+
+
+
+# Ingess for Frontend. Ingress can also issue certificate, e.g. from letsencrypt.
+# If you prefer to use cert-manager, set certmanager to true and configure certmanager_params.
+# If you prefer to use files, set hostcert and hostkey to true and point to pem files.
+ingress:
+  enabled: true
+  host: <REPLACE_ME_TO_FQDN>
+  annotations:
+    kubernetes.io/ingress.class: haproxy
+    kubernetes.io/ssl-passthrough: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+
+# SSL Sertificate parameters:
+# It does support getting certificate from cert-manager or
+# from files directory inside this chart.
+# Set the correct location to hostcert and hostkey inside files directory
+# In case of cert manager - set certmanager to true
+# and all certmanager related parameters
+certmanager: false
+certmanager_params:
+  commonName: "<REPLACE_ME_TO_FQDN>"
+  dnsNames:
+    - "<REPLACE_ME_TO_FQDN>"
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: incommon-v2-prod
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 4096
+# if certmanager is false - set hostcert and hostkey to true - which
+# points to pem files.
+usehostcert: false
+hostcert: "hostcert.pem"
+hostkey: "hostkey.pem"
+
+
+
+# ===============================================================
+# Configuration parameters for Frontend:
+# These must be defined and configured here: https://github.com/sdn-sense/rm-configs
+sitename: T3_US_Caltech_Dev
+gitrepo: "sdn-sense/rm-configs"
+branch: master
+md5: 8feb35ed655904aa30d466658756a87f
+
+ansible_conf: "ansible_conf.yaml"
+environment_file: "environment.env"

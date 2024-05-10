@@ -1,0 +1,13 @@
+# See https://sdn-sense.github.io/NetControlAnsible.html for format
+inventory:
+  dellos9_s0:
+    network_os: sense.dellos9.dellos9
+    host: 1.2.3.4
+    user: admin123
+    pass: admin123
+    become: 0
+    snmp_params:
+      session_vars:
+        community: comm_test
+        hostname: 1.2.3.4
+        version: 2
