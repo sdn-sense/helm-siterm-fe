@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  siterm-fe:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-05-10T11:34:56.026554-05:00"
+    description: A Helm chart for Deploying SiteRM Frontend Containers
+    digest: da3ecb92e05a53b1daa11c381d7d0dfc55571596bf4300d839fac2b0d8818d04
+    name: siterm-fe
+    type: application
+    urls:
+    - https://sdn-sense.github.io/helm-siterm-fe/siterm-fe-0.1.2.tgz
+    version: 0.1.2
+generated: "2024-05-10T11:34:56.024912-05:00"
