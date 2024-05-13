@@ -71,13 +71,21 @@ certmanager_params:
     algorithm: RSA
     encoding: PKCS1
     size: 4096
-# if certmanager is false - set hostcert and hostkey to true - which
-# points to pem files.
+# if certmanager is false - set hostcert and hostkey to true - and put all
+# certificate content. Sadly, helm does not allow to include files outside of chart
+# So local files are not possible to include.
+# Spacing is important, so make sure to keep it at 2 spaces, which points to line beginning inside file (as this is a YAML file and need structure)
 usehostcert: false
-hostcert: "hostcert.pem"
-hostkey: "hostkey.pem"
-
-
+hostcert: |
+  -----BEGIN CERTIFICATE-----
+  MIIITTCCBrWgAwIBAgIRAIQCECprMd/bWm5I5oKFx+owDQYJKoZIhvcNAQEMBQAw
+  ....
+  -----END CERTIFICATE-----
+hostkey: |
+  -----BEGIN RSA PRIVATE KEY-----
+  MIIJKQIBAAKCAgEApJNvz1WUk/iW1VBkX3UsCWdoxRpH7nYvMCrqyRbiKUI54CHu
+  ...
+  -----END RSA PRIVATE KEY-----
 
 # ===============================================================
 # Configuration parameters for Frontend:
@@ -87,5 +95,34 @@ gitrepo: "sdn-sense/rm-configs"
 branch: master
 md5: 8feb35ed655904aa30d466658756a87f
 
-ansible_conf: "ansible_conf.yaml"
-environment_file: "environment.env"
+# Sadly, helm does not allow to include files outside of chart
+# So local files are not possible to include. Modify the following
+# parameters to correct values.
+# Spacing is important, so make sure to keep it at 2 spaces, which points to line beginning inside file (as this is a YAML file)
+# In case it is RAW (No network configuration) - set ansible_conf to inventory: {}
+# For the rest - see here for format: https://sdn-sense.github.io/NetControlAnsible.html and supported devices;
+ansible_conf: |
+  # See https://sdn-sense.github.io/NetControlAnsible.html for format
+  inventory:
+    dellos9_s0:
+      network_os: sense.dellos9.dellos9
+      host: 1.2.3.4
+      user: admin123
+      pass: admin123
+      become: 0
+      snmp_params:
+        session_vars:
+          community: comm_test
+          hostname: 1.2.3.4
+          version: 2
+
+# Environment variables for Frontend (Mainly modify only MariaDB_DB_PASSWORD)
+# Spacing is important, so make sure to keep it at 2 spaces, which points to line beginning inside file (as this is a YAML file)
+
+environment_file: |
+  # Environment variables for MariaDB
+  MARIA_DB_PASSWORD=<REPLACE_ME>
+  MARIA_DB_USER=root
+  MARIA_DB_HOST=localhost
+  MARIA_DB_PORT=3306
+  MARIA_DB_DATABASE=sitefe

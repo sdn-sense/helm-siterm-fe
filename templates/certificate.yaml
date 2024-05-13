@@ -2,7 +2,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: cert-{{ template "sitermagent.truncname" . }}
+  name: cert-{{ template "sitefe.truncname" . }}
   namespace: {{ .Values.namespace }}
 spec:
   commonName: {{ .Values.certmanager_params.commonName }}
@@ -24,14 +24,22 @@ spec:
 {{- if .Values.certmanager_params.renewBefore }}
   renewBefore: {{ .Values.certmanager_params.renewBefore }}
 {{- end }}
-  secretName: cert-{{ template "sitermagent.truncname" . }}
+  secretName: cert-{{ template "sitefe.truncname" . }}
 {{- else if .Values.usehostcert }}
 apiVersion: v1
 kind: Secret
 metadata:
-  name: cert-{{ template "sitermagent.truncname" . }}
+  name: cert-{{ template "sitefe.truncname" . }}
   namespace: {{ .Values.namespace}}
 data:
-  tls.crt: {{ .Files.Get .Values.hostcert | b64enc }}
-  tls.key: {{ .Files.Get .Values.hostkey | b64enc }}
+{{- if not (quote .Values.hostcert | empty)  }}
+  tls.crt: {{ .Values.hostcert | b64enc }}
+{{- else }}
+{{- fail "value for hostcert must be set" }}
+{{- end -}}
+{{- if not (quote .Values.hostcert | empty)  }}
+  tls.key: {{ .Values.hostkey | b64enc }}
+{{- else }}
+{{- fail "value for hostkey must be set" }}
+{{- end -}}
 {{- end }}
