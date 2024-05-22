@@ -8,9 +8,9 @@ Expand the name of the chart.
 
 {{- define "sitefe.truncname" -}}
 {{- if .Values.md5 }}
-{{- printf "%s-%s-%s" .Chart.Name .Values.sitename .Values.md5 | replace "+" "_" | trunc 63 | trimSuffix "-" | lower }}
+{{- printf "%s-%s-%s" .Chart.Name .Values.sitename .Values.md5 | replace "_" "-" | trunc 63 | trimSuffix "-" | lower }}
 {{- else }}
-{{- printf "%s-conf-%s" .Chart.Name .Values.sitename | replace "+" "_" | trunc 63 | trimSuffix "-" | lower }}
+{{- printf "%s-conf-%s" .Chart.Name .Values.sitename | replace "_" "-" | trunc 63 | trimSuffix "-" | lower }}
 {{- end }}
 {{- end }}
 
