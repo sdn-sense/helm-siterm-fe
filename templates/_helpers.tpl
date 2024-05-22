@@ -2,15 +2,15 @@
 Expand the name of the chart.
 */}}
 {{- define "sitefe.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name .Values.nameOverride | trunc 53 | trimSuffix "-" }}
 {{- end }}
 
 
 {{- define "sitefe.truncname" -}}
 {{- if .Values.md5 }}
-{{- printf "%s-%s-%s" .Chart.Name .Values.sitename .Values.md5 | replace "_" "-" | trunc 63 | trimSuffix "-" | lower }}
+{{- printf "%s-%s-%s" .Chart.Name .Values.sitename .Values.md5 | replace "_" "-" | trunc 53 | trimSuffix "-" | lower }}
 {{- else }}
-{{- printf "%s-conf-%s" .Chart.Name .Values.sitename | replace "_" "-" | trunc 63 | trimSuffix "-" | lower }}
+{{- printf "%s-conf-%s" .Chart.Name .Values.sitename | replace "_" "-" | trunc 53 | trimSuffix "-" | lower }}
 {{- end }}
 {{- end }}
 
@@ -18,18 +18,18 @@ Expand the name of the chart.
 
 {{/*
 Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+We truncate at 53 chars because some Kubernetes name fields are limited to this (by the DNS naming spec) (e.g. max is 63, we leave 10chars).
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "sitefe.fullname" -}}
 {{- if .Values.fullnameOverride }}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- .Values.fullnameOverride | trunc 53 | trimSuffix "-" }}
 {{- else }}
 {{- $name := default .Chart.Name .Values.nameOverride }}
 {{- if contains $name .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- .Release.Name | trunc 53 | trimSuffix "-" }}
 {{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" .Release.Name $name | trunc 53 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 {{- end }}
@@ -38,7 +38,7 @@ If release name contains chart name it will be used as a full name.
 Create chart name and version as used by the chart label.
 */}}
 {{- define "sitefe.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 53 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
