@@ -1,6 +1,32 @@
 {{/*
 Expand the name of the chart.
 */}}
+
+{{- define "deploymentimage" -}}
+{{- if .Values.image }}
+{{- if .Values.image.image }}
+{{- printf "sdnsense/site-rm-sense:%s" .Values.image.image }}
+{{- else }}
+{{- printf "sdnsense/site-rm-sense:latest-20240614"}}
+{{- end }}
+{{- else }}
+{{- printf "sdnsense/site-rm-sense:latest-20240614"}}
+{{- end }}
+{{- end }}
+
+{{- define "deploymentpullpolicy" -}}
+{{- if .Values.image }}
+{{- if .Values.image.pullPolicy }}
+{{- printf "%s" .Values.image.pullPolicy }}
+{{- else }}
+{{- printf "Always"}}
+{{- end }}
+{{- else }}
+{{- printf "Always"}}
+{{- end }}
+{{- end }}
+
+
 {{- define "sitefe.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 53 | trimSuffix "-" }}
 {{- end }}
@@ -13,8 +39,6 @@ Expand the name of the chart.
 {{- printf "%s-conf-%s" .Chart.Name .Values.sitename | replace "_" "-" | trunc 53 | trimSuffix "-" | lower }}
 {{- end }}
 {{- end }}
-
-
 
 {{/*
 Create a default fully qualified app name.

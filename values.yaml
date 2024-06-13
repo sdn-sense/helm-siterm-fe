@@ -5,14 +5,19 @@
 # Namespace to deploy into.
 namespace: sense
 
-# Image to run.
-# latest - Production release
-# dev - Development release
-image:
-  image: sdnsense/site-rm-sense:latest
-  pullPolicy: Always
+# Image to run. Helm charts run same image as helm version by default.
+# If you helm chart installed is 0.1.46 - it will use latest-1.4.6 image
+# Please consult SENSE team if any changes needed, but usually no.
+# During upgrade process - new helm chart will take new image of specified version of helm.
+# latest - Latest stable version (might be not from same helm release and missing Helm features)
+# dev - Development release (use with caution)
+# pullPolicy: Always - Always pull image from repository (that is default) Overwrite if needed.
+#image:
+#  pullPolicy: Always
+#  image: latest-20240614
 
-# Resources for Frontend. This should not require any changes.
+# Resources for Frontend. This should not require any changes for a single network device control;
+# If you have more devices - increase resources. e.g. for 4 network devices - 4 CPU and 8Gi memory
 # Defaults below:
 resources:
   limits:
@@ -39,6 +44,22 @@ storage:
 #     value: "value"
 #     effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
 
+# Node Selector for your deployment. Required to set if deploymentType is Deployment:
+nodeSelector:
+  kubernetes.io/hostname: node-2-7.sdsc.optiputer.net
+# In case of DaemonSet - it will be ignored.
+
+# Affinity for your deployment. Include as many as you need and it will
+# be added to your deployment file.
+# affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: kubernetes.io/nodepool
+#               operator: In
+#               values:
+#                 - nodepool1
 
 
 # Ingess for Frontend. Ingress can also issue certificate, e.g. from letsencrypt.

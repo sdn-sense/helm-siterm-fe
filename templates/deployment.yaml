@@ -20,9 +20,17 @@ spec:
       tolerations:
       {{ toYaml .Values.tolerations | indent 6 }}
       {{- end }}
+      {{- if .Values.affinity }}
+      affinity:
+      {{ toYaml .Values.affinity | indent 6 }}
+      {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+      {{ toYaml .Values.nodeSelector | indent 6 }}
+      {{- end }}
       containers:
-      - image: {{ .Values.image.image }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+      - image: {{ template "deploymentimage" . }}
+        imagePullPolicy: {{ template "deploymentpullpolicy" . }}
         name: pod-{{ template "sitefe.truncname" . }}
         ports:
         - containerPort: 80
