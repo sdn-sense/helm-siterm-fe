@@ -18,14 +18,12 @@ namespace: sense
 
 # Resources for Frontend. This should not require any changes for a single network device control;
 # If you have more devices - increase resources. e.g. for 4 network devices - 4 CPU and 8Gi memory
-# Defaults below:
-resources:
-  limits:
-    cpu: 2
-    memory: 4Gi
-  requests:
-    cpu: 2
-    memory: 4Gi
+# Defaults below (no need to uncomment and those will be used by helm chart)
+# Change it only if needed.
+#cpuLimit: 4
+#memoryLimit: 8Gi
+#cpuRequest: 2
+#memoryRequest: 4Gi
 
 # Persistent volume claim for Frontend.
 # This should not require any changes if you run ceph and no others are supported yet.
