@@ -3,7 +3,17 @@ entries:
   siterm-fe:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-10-08T15:04:38.399231-05:00"
+    created: "2024-10-08T15:10:25.15995-05:00"
+    description: A Helm chart for Deploying SiteRM Frontend Containers
+    digest: b0cea65436d7689cd8091eb722e7d8078863fdfa1880b5cf35d11a9759fb0b40
+    name: siterm-fe
+    type: application
+    urls:
+    - https://sdn-sense.github.io/helm-siterm-fe/siterm-fe-0.1.464.tgz
+    version: 0.1.464
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-10-08T15:10:25.158886-05:00"
     description: A Helm chart for Deploying SiteRM Frontend Containers
     digest: 53149670df24ab3fc0ba1b9d26f1a2e5a09da325ccb07b29f11285f8d9915813
     name: siterm-fe
@@ -13,7 +23,7 @@ entries:
     version: 0.1.463
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-10-08T15:04:38.398448-05:00"
+    created: "2024-10-08T15:10:25.158124-05:00"
     description: A Helm chart for Deploying SiteRM Frontend Containers
     digest: 51241e43d17939674470e2ecbe1124ba50af2065396495cf75fc88cfd2b0cc3f
     name: siterm-fe
@@ -23,7 +33,7 @@ entries:
     version: 0.1.462
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-10-08T15:04:38.397639-05:00"
+    created: "2024-10-08T15:10:25.157352-05:00"
     description: A Helm chart for Deploying SiteRM Frontend Containers
     digest: 519d2c763dcdce0807c26f29a63293b349d43b286f97c4ca5470ac2001f65674
     name: siterm-fe
@@ -33,7 +43,7 @@ entries:
     version: 0.1.461
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-10-08T15:04:38.397086-05:00"
+    created: "2024-10-08T15:10:25.156896-05:00"
     description: A Helm chart for Deploying SiteRM Frontend Containers
     digest: 2be9ab53e8e9aed1286fea2fba7b3f31b596d67b6d3de55c66d98a27933b417b
     name: siterm-fe
@@ -41,4 +51,4 @@ entries:
     urls:
     - https://sdn-sense.github.io/helm-siterm-fe/siterm-fe-0.1.46.tgz
     version: 0.1.46
-generated: "2024-10-08T15:04:38.392032-05:00"
+generated: "2024-10-08T15:10:25.153973-05:00"
