@@ -43,23 +43,23 @@ storage:
 #     effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
 
 # Node Selector for your deployment. Required to set if deploymentType is Deployment:
-#nodeSelector: {}
-nodeSelector:
-  kubernetes.io/hostname: node-2-7.sdsc.optiputer.net
+nodeSelector: {}
+#nodeSelector:
+#  kubernetes.io/hostname: node-2-7.sdsc.optiputer.net
 # In case of DaemonSet - it will be ignored.
 
 # Affinity for your deployment. Include as many as you need and it will
 # be added to your deployment file.
-#affinity: {}
-affinity:
-   nodeAffinity:
-     requiredDuringSchedulingIgnoredDuringExecution:
-       nodeSelectorTerms:
-         - matchExpressions:
-             - key: kubernetes.io/nodepool
-               operator: In
-               values:
-                 - nodepool1
+affinity: {}
+#affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: kubernetes.io/nodepool
+#               operator: In
+#               values:
+#                 - nodepool1
 
 
 # Ingess for Frontend. Ingress can also issue certificate, e.g. from letsencrypt.
