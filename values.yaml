@@ -43,21 +43,23 @@ storage:
 #     effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
 
 # Node Selector for your deployment. Required to set if deploymentType is Deployment:
+#nodeSelector: {}
 nodeSelector:
   kubernetes.io/hostname: node-2-7.sdsc.optiputer.net
 # In case of DaemonSet - it will be ignored.
 
 # Affinity for your deployment. Include as many as you need and it will
 # be added to your deployment file.
-# affinity:
-#   nodeAffinity:
-#     requiredDuringSchedulingIgnoredDuringExecution:
-#       nodeSelectorTerms:
-#         - matchExpressions:
-#             - key: kubernetes.io/nodepool
-#               operator: In
-#               values:
-#                 - nodepool1
+#affinity: {}
+affinity:
+   nodeAffinity:
+     requiredDuringSchedulingIgnoredDuringExecution:
+       nodeSelectorTerms:
+         - matchExpressions:
+             - key: kubernetes.io/nodepool
+               operator: In
+               values:
+                 - nodepool1
 
 
 # Ingess for Frontend. Ingress can also issue certificate, e.g. from letsencrypt.
@@ -66,10 +68,10 @@ nodeSelector:
 ingress:
   enabled: true
   host: <REPLACE_ME_TO_FQDN>
-  annotations:
-    kubernetes.io/ingress.class: haproxy
-    kubernetes.io/ssl-passthrough: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+#  annotations:
+#    kubernetes.io/ingress.class: haproxy
+#    kubernetes.io/ssl-passthrough: "true"
+#    cert-manager.io/cluster-issuer: letsencrypt-prod
 
 # SSL Sertificate parameters:
 # It does support getting certificate from cert-manager or
@@ -113,6 +115,16 @@ sitename: T3_US_Caltech_Dev
 gitrepo: "sdn-sense/rm-configs"
 branch: master
 md5: 8feb35ed655904aa30d466658756a87f
+
+# If you need to use your own Issuer (e.g. There is no ClusterIssuer) - set it to true.
+# Name of issuer must be same as used in certmanager_params:issuerRef:name
+# Email address for registering to server (e.g. LetsEncrypt requires that)
+# server - remove issue ACME Endpoint.
+issuer: true
+issuer_params:
+  name: sense-issuer
+  email: "juztas@gmail.com"
+  server: "https://acme-v02.api.letsencrypt.org/directory"
 
 # Sadly, helm does not allow to include files outside of chart
 # So local files are not possible to include. Modify the following

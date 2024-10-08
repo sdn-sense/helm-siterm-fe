@@ -16,17 +16,17 @@ spec:
       labels:
         run: run-{{ template "sitefe.truncname" . }}
     spec:
-      {{- if .Values.tolerations }}
+      {{- if and .Values.tolerations (not (empty .Values.tolerations)) }}
       tolerations:
-      {{ .Values.tolerations | toYaml | indent 8 | trim }}
+        {{ .Values.tolerations | toYaml | indent 8 | trim }}
       {{- end }}
-      {{- if .Values.affinity }}
+      {{- if and .Values.affinity (not (empty .Values.affinity)) }}
       affinity:
-      {{ .Values.affinity | toYaml | indent 8 | trim }}
+        {{ .Values.affinity | toYaml | indent 8 | trim }}
       {{- end }}
-      {{- if .Values.nodeSelector }}
+      {{- if and .Values.nodeSelector (not (empty .Values.nodeSelector)) }}
       nodeSelector:
-      {{ .Values.nodeSelector | toYaml | indent 8 | trim }}
+        {{ .Values.nodeSelector | toYaml | indent 8 | trim }}
       {{- end }}
       containers:
       - image: {{ template "deploymentimage" . }}
