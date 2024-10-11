@@ -157,3 +157,8 @@ environment_file: |
   MARIA_DB_HOST=localhost
   MARIA_DB_PORT=3306
   MARIA_DB_DATABASE=sitefe
+
+# SSH Keys for communications with Network devices
+# In case ansible is configured to use ssh key, add path to private key here.
+#sshkeys:
+#  frrsshkey: files/sense-cern-fabric.nrp-nautilus.io.yaml/frrsshkey

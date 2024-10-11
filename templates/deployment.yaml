@@ -94,6 +94,11 @@ spec:
           name: cert-{{ template "sitefe.truncname" . }}
           readOnly: true
           subPath: privkey.pem
+        {{- if .Values.sshkeys }}
+        - name: sshvol-{{ template "sitefe.truncname" . }}
+          mountPath: /opt/siterm/config/ssh-keys/
+          readOnly: true
+        {{- end }}
       volumes:
       - configMap:
           defaultMode: 420
@@ -120,6 +125,17 @@ spec:
           - key: tls.key
             path: privkey.pem
           secretName: cert-{{ template "sitefe.truncname" . }}
+      {{- if .Values.sshkeys }}
+      - name: sshvol-{{ template "sitefe.truncname" . }}
+        secret:
+          secretName: sshkey-{{ template "sitefe.truncname" . }}
+          defaultMode: 600
+          items:
+          {{- range $key, $path := .Values.sshkeys }}
+          - key: {{ $key }}
+            path: {{ $key }}
+          {{- end }}
+      {{- end }}
       {{- if .Values.storage.enabled }}
       - name: pvc-{{ template "sitefe.truncname" . }}
         persistentVolumeClaim:
