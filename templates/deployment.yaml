@@ -1,3 +1,5 @@
+# SENSENAME: sense-{{ template "sitefe.truncname" . }}
+# SENSENAMESPACE: {{ .Values.namespace }}
 ---
 apiVersion: apps/v1
 kind: Deployment
