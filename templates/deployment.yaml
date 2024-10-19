@@ -6,6 +6,8 @@ kind: Deployment
 metadata:
   labels:
     run: run-{{ template "sitefe.truncname" . }}
+    helm-version: {{ .Chart.Version }}
+    helm-app-version: {{ .Chart.AppVersion }}
   name: sense-{{ template "sitefe.truncname" . }}
   namespace: {{ .Values.namespace }}
 spec:
@@ -17,6 +19,8 @@ spec:
     metadata:
       labels:
         run: run-{{ template "sitefe.truncname" . }}
+        helm-version: {{ .Chart.Version }}
+        helm-app-version: {{ .Chart.AppVersion }}
     spec:
       {{- if and .Values.tolerations (not (empty .Values.tolerations)) }}
       tolerations:
