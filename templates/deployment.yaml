@@ -135,7 +135,7 @@ spec:
       - name: sshvol-{{ template "sitefe.truncname" . }}
         secret:
           secretName: sshkey-{{ template "sitefe.truncname" . }}
-          defaultMode: 600
+          defaultMode: 0600
           items:
           {{- range $key, $path := .Values.sshkeys }}
           - key: {{ $key }}
