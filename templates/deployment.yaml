@@ -73,6 +73,10 @@ spec:
         - mountPath: /opt/siterm/
           name: pvc-{{ template "sitefe.truncname" . }}
         {{- end }}
+        {{- if .Values.logstorage.enabled }}
+        - mountPath: /var/log/
+          name: pvclog-{{ template "sitefe.truncname" . }}
+        {{- end }}
         - mountPath: /etc/siterm.yaml
           name: conf-{{ template "sitefe.truncname" . }}
           subPath: sense-siterm-fe.yaml
@@ -146,4 +150,9 @@ spec:
       - name: pvc-{{ template "sitefe.truncname" . }}
         persistentVolumeClaim:
           claimName: pvc-{{ template "sitefe.truncname" . }}
+      {{- end }}
+      {{- if .Values.logstorage.enabled }}
+      - name: pvclog-{{ template "sitefe.truncname" . }}
+        persistentVolumeClaim:
+          claimName: pvclog-{{ template "sitefe.truncname" . }}
       {{- end }}
