@@ -139,10 +139,10 @@ hostkey: |
 # ===============================================================
 # Configuration parameters for Frontend:
 # These must be defined and configured here: https://github.com/sdn-sense/rm-configs
-sitename: T3_US_Caltech_Dev
+sitename: <REPLACE_ME_TO_SITENAME>
 gitrepo: "sdn-sense/rm-configs"
 branch: master
-md5: 8feb35ed655904aa30d466658756a87f
+md5: <REPLACE_ME_TO_UUID>
 
 # If you need to use your own Issuer (e.g. There is no ClusterIssuer) - set it to true.
 # Name of issuer must be same as used in certmanager_params:issuerRef:name
