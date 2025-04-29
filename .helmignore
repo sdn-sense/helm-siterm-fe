@@ -4,3 +4,5 @@
 # Match any file or path named .git
 .git
 
+# Ignore tgz files
+*.tgz
