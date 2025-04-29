@@ -34,6 +34,15 @@ spec:
       nodeSelector:
         {{ .Values.nodeSelector | toYaml | indent 8 | trim }}
       {{- end }}
+      {{- if .Values.logstorage.enabled }}
+      initContainers:
+      - name: init-log-{{ template "sitefe.truncname" . }}
+        image: busybox
+        command: ["sh", "-c", "mkdir -p /var/log/supervisor"]
+        volumeMounts:
+        - name: pvclog-{{ template "sitefe.truncname" . }}
+          mountPath: /var/log
+      {{- end }}
       containers:
       - image: {{ template "deploymentimage" . }}
         imagePullPolicy: {{ template "deploymentpullpolicy" . }}
