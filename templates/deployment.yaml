@@ -47,20 +47,28 @@ spec:
           protocol: TCP
         - containerPort: 8443
           protocol: TCP
+        {{- if .Values.liveness.enabled }}
         livenessProbe:
           exec:
             command:
             - siterm-liveness
-          initialDelaySeconds: 60
-          periodSeconds: 60
-          failureThreshold: 3
+          initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.liveness.periodSeconds }}
+          failureThreshold: {{ .Values.liveness.failureThreshold }}
+          successThreshold: {{ .Values.liveness.successThreshold }}
+          timeoutSeconds: {{ .Values.liveness.timeoutSeconds }}
+        {{- end }}
+        {{- if .Values.readiness.enabled }}
         readinessProbe:
           exec:
             command:
             - siterm-readiness
-          initialDelaySeconds: 60
-          periodSeconds: 60
-          failureThreshold: 3
+          initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readiness.periodSeconds }}
+          failureThreshold: {{ .Values.readiness.failureThreshold }}
+          successThreshold: {{ .Values.readiness.successThreshold }}
+          timeoutSeconds: {{ .Values.readiness.timeoutSeconds }}
+        {{- end }}
         resources:
           limits:
             cpu: {{ template "cpulimit" .}}

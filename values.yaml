@@ -70,6 +70,25 @@ affinity: {}
 #               values:
 #                 - nodepool1
 
+# Liveness and readiness probes for deployment.
+# Liveness probe for your deployment. It checks if agent is running and healthy.
+# By default - this is enabled and will be added to deployment.
+liveness:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 60
+  failureThreshold: 5
+  successThreshold: 1
+  timeoutSeconds: 30
+# Readiness probe for your deployment. It checks if agent is ready to accept connections.
+# By default - this is enabled and will be added to deployment.
+readiness:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 60
+  failureThreshold: 5
+  successThreshold: 1
+  timeoutSeconds: 30
 
 # Ingess for Frontend. Ingress can also issue certificate, e.g. from letsencrypt.
 # If you prefer to use cert-manager, set certmanager to true and configure certmanager_params.
