@@ -38,7 +38,7 @@ spec:
       initContainers:
       - name: init-log-{{ template "sitefe.truncname" . }}
         image: busybox
-        command: ["sh", "-c", "mkdir -p /var/log/supervisor"]
+        command: ["sh", "-c", "mkdir -p /var/log/supervisor /var/log/httpd"]
         volumeMounts:
         - name: pvclog-{{ template "sitefe.truncname" . }}
           mountPath: /var/log
