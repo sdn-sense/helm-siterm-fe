@@ -13,18 +13,3 @@ spec:
       storage: {{ .Values.storage.capacity }}
   storageClassName: {{ .Values.storage.storageClassName }}
 {{- end -}}
-{{- if .Values.logstorage.enabled -}}
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pvclog-{{ template "sitefe.truncname" . }}
-  namespace: {{ .Values.namespace }}
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{ .Values.logstorage.capacity }}
-  storageClassName: {{ .Values.logstorage.storageClassName }}
-{{- end -}}
