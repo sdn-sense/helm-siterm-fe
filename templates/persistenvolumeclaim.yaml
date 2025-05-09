@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-{{ template "sitefe.truncname" . }}
+  name: {{ .Values.storage.volname | default (printf "pvc-%s" (include "sitefe.truncname" .)) }}
   namespace: {{ .Values.namespace }}
 spec:
   accessModes:

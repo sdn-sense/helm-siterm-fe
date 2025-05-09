@@ -33,6 +33,7 @@ storage:
   enabled: true
   storageClassName: rook-ceph-block
   capacity: 10Gi
+# volname: Optional, better not set to avoid conflict. By default it uses pvc-<.Chart.Name>-<.Values.sitename>-<.Values.md5>, which is unique per deployment
 
 # Persistent volume claim for Frontend logs.
 # This should not require any changes if you run ceph and no others are supported yet.
@@ -42,6 +43,7 @@ logstorage:
   enabled: true
   storageClassName: rook-ceph-block
   capacity: 5Gi
+# volname: Optional, better not set to avoid conflict. By default it uses pvclog-<.Chart.Name>-<.Values.sitename>-<.Values.md5>, which is unique per deployment
 
 # tolerations for your deployment. Include as many as you need and it will
 # be added to your deployment file.

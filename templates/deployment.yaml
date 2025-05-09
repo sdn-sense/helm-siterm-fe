@@ -166,10 +166,10 @@ spec:
       {{- if .Values.storage.enabled }}
       - name: pvc-{{ template "sitefe.truncname" . }}
         persistentVolumeClaim:
-          claimName: pvc-{{ template "sitefe.truncname" . }}
+          claimName: {{ .Values.storage.volname | default (printf "pvc-%s" (include "sitefe.truncname" .)) }}
       {{- end }}
       {{- if .Values.logstorage.enabled }}
       - name: pvclog-{{ template "sitefe.truncname" . }}
         persistentVolumeClaim:
-          claimName: pvclog-{{ template "sitefe.truncname" . }}
+          claimName: {{ .Values.logstorage.volname | default (printf "pvclog-%s" (include "sitefe.truncname" .)) }}
       {{- end }}
