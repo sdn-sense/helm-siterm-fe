@@ -6,10 +6,10 @@ Define Deployment image
 {{- if .Values.image.image }}
 {{- printf "sdnsense/site-rm-sense:%s" .Values.image.image }}
 {{- else }}
-{{- printf "sdnsense/site-rm-sense:latest-20250515"}}
+{{- printf "sdnsense/site-rm-sense:dev-20250519"}}
 {{- end }}
 {{- else }}
-{{- printf "sdnsense/site-rm-sense:latest-20250515"}}
+{{- printf "sdnsense/site-rm-sense:dev-20250519"}}
 {{- end }}
 {{- end }}
 

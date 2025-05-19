@@ -97,7 +97,7 @@ spec:
         - mountPath: /etc/siterm.yaml
           name: conf-{{ template "sitefe.truncname" . }}
           subPath: sense-siterm-fe.yaml
-        - mountPath: /etc/siterm-mariadb
+        - mountPath: /etc/environment
           name: secret-{{ template "sitefe.truncname" . }}
           readOnly: true
           subPath: environment.conf
